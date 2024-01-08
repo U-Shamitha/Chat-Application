@@ -1,0 +1,39 @@
+/* Container styles */
+  .container {
+    /* max-width: 600px; */
+    margin: auto;
+  }
+  
+  /* Form styles */
+  .searchForm{
+    background-color: #f3f4f6;
+    padding: 1rem;
+    border-radius: 0.5rem;
+  }
+  
+  /* Input styles */
+  input {
+    /* width: 70%; */
+    padding: 0.5rem;
+    border: 1px solid #cbd5e0;
+    border-radius: 0.25rem;
+  }
+  
+  /* Select styles */
+  select {
+    /* width: 30%; */
+    padding: 0.5rem;
+    border: 1px solid #cbd5e0;
+    border-radius: 0.25rem;
+  }
+  
+  /* Button styles */
+  button {
+    background-color: #1a202c;
+    color: #ffffff;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 0.25rem;
+    cursor: pointer;
+  }
+  
