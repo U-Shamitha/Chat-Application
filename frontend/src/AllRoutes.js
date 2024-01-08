@@ -1,11 +1,11 @@
 import React from 'react';
 import { HashRouter as Router, Route, Routes } from 'react-router-dom';
-import Login from './components/login/Login';
-import SignUp from './components/signUp/SignUp';
+import Login from './components/Login';
+import SignUp from './components/SignUp';
 import ChatorUserList from './components/ChatorUserList';
-import Navbar from './components/Navbar/Navbar';
+import Navbar from './components/Navbar';
 import ProtectedRoute from './components/ProtectedRoute';
-import Profile from './components/Profile/Profile';
+import Profile from './components/Profile';
 
 const AllRoutes = ()=> {
   return (

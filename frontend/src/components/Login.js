@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { FaLock, FaEye, FaEyeSlash, FaEnvelope } from "react-icons/fa";
-import axios from "../../axios/axios";
+import axios from "../axios/axios";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Cookies from 'js-cookie';
-import { setUser } from "../../redux/userSlice";
+import { setUser } from "../redux/userSlice";
 
 const Login = () => {
   const [email, setEmail] = useState("");

@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import axios from "../../axios/axios";
+import axios from "../axios/axios";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { FaEnvelope, FaUser, FaLock, FaEye, FaEyeSlash } from "react-icons/fa";
-import { setUser } from "../../redux/userSlice";
+import { setUser } from "../redux/userSlice";
 
 const SignUp = () => {
     const [email, setEmail] = useState("");

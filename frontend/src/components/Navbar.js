@@ -7,9 +7,9 @@ import Typography from '@mui/material/Typography';
 import MenuIcon from '@mui/icons-material/Menu';
 import { Button } from '@mui/material';
 import { Link } from 'react-router-dom';
-import Menus from '../Menus/Menus';
+import Menus from './Menus/Menus';
 import { useDispatch, useSelector } from 'react-redux';
-import { setUser } from '../../redux/userSlice';
+import { setUser } from '../redux/userSlice';
 
 const Navbar=()=>{
   

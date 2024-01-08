@@ -1,7 +1,6 @@
 import { useDispatch } from 'react-redux';
 import AllRoutes from './AllRoutes';
 import './App.css';
-import Navbar from './components/Navbar/Navbar';
 import { fetchUser } from './redux/userSlice';
 
 function App() {

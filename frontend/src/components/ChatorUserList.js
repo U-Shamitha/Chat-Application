@@ -13,7 +13,8 @@ const ChatorUserList = () => {
   const user = useSelector((state) => state.user.user);
 
   useEffect(() => {
-    const newSocket = io('http://localhost:5000', { query: user });
+    console.log(process.env.REACT_APP_SOCKET_URL)
+    const newSocket = io(process.env.REACT_APP_SOCKET_URL, { query: user });
     setSocket(newSocket)
 
     return () => {
