@@ -11,6 +11,11 @@ const Chat = ({ room, setRoom, socket, opponentUser}) => {
 
   const messageContainerRef = useRef(null);
 
+  useEffect(()=>{
+    setOpponentTyping(false);
+  },[opponentUser])
+
+
   useEffect(() => {
     socket.emit('joinRoom', { roomName: room, userId: user?.email });
 
