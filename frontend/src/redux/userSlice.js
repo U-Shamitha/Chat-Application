@@ -2,6 +2,9 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
   user: null,
+  userList: [],
+  groupList: [],
+  socket: null,
   isLoading: false,
   error: null,
 }
@@ -33,6 +36,27 @@ export const setUser = createAsyncThunk(
     }
   )
 
+  export const setUserSocket = createAsyncThunk(
+    'user/setUserSocket',
+    async (data) => {
+      return data
+    }
+  )
+
+  export const setUserList = createAsyncThunk(
+    'user/setUserList',
+    async (data) => {
+      return data
+    }
+  )
+  
+  export const setGroupList= createAsyncThunk(
+    'user/setGroupList',
+    async (data) => {
+      return data
+    }
+  )
+
 export const userSlice = createSlice({
   name: 'user',
   initialState,
@@ -52,6 +76,15 @@ export const userSlice = createSlice({
     })
     builder.addCase(setUser.fulfilled,(state,action)=>{
         state.user = action.payload
+    })
+    builder.addCase(setUserSocket.fulfilled,(state,action)=>{
+      state.socket = action.payload
+    })
+    builder.addCase(setUserList.fulfilled,(state,action)=>{
+      state.userList = action.payload
+    })
+    builder.addCase(setGroupList.fulfilled,(state,action)=>{
+      state.groupList = action.payload
     })
   },
 })

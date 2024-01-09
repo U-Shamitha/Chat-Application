@@ -6,6 +6,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
 const cors =  require('cors');
+const {ObjectID} = require('mongodb');
 
 //Config
 dotenv.config()
@@ -21,6 +22,8 @@ const io = socketIo(server, {cors: {
 const userRoutes = require('./routes/userRoutes');
 const User = require('./models/User');
 const Message = require('./models/Message');
+const Group = require('./models/Group');
+const { group } = require('console');
 
 const PORT = process.env.PORT || 5000;
 
@@ -41,13 +44,17 @@ io.on('connect_error', (error) => {
 //Socket.IO
 io.on('connection', (socket) => {
 
-  const { email, username, id } = socket.handshake.query;
-  console.log('A user connected', username, socket.id);
+  const { email, username, _id: socketUserId } = socket.handshake.query;
+  console.log('User connected', username, socketUserId, socket.id);
   onlineUsers.set(email, true); // set status to online
   updateUsersList();
 
   socket.on('getUsers', () => {
     updateUsersList();
+  });
+
+  socket.on('getGroups', () => {
+    updateGroupsList();
   });
 
   socket.on('createRoom', (targetUserEmail) => {
@@ -64,6 +71,15 @@ io.on('connection', (socket) => {
     const previousMessages = await Message.find({ roomName }).sort({ timestamp: 1 }).lean();
 
     socket.emit('existingMessages', previousMessages);
+  });
+
+  socket.on('createGroup', async ({groupName, selectedParticipants}) => {
+    console.log(groupName, selectedParticipants)
+    const groupId = await createGroup(name = groupName, participants = selectedParticipants, socketUserId);
+    console.log(groupId)
+    socket.join(groupId);
+
+    io.to(groupId).emit('joinGroup', { groupId, participants });
   });
 
   // Handle chat messages within a room
@@ -100,15 +116,15 @@ io.on('connection', (socket) => {
     }
   });
 
-  // // Listen for typing status
-  // socket.on('typing', (username) => {
-  //   console.log(username, " is typing...")
-  //   socket.broadcast.emit('typing', username);
-  // });
-
-  socket.on('typing', ({ roomName, userId, isTyping }) => {
-    io.to(roomName).emit('opponentTyping', { userId, isTyping });
+  socket.on('typing', ({ roomName,typingUser, isTyping }) => {
+    console.log('typingUser', typingUser)
+    io.to(roomName).emit('opponentTyping', { roomName, typingUser, isTyping });
   });
+
+  socket.on('toggleMsgAccess',async({groupId, sendMsg})=>{
+    await toggleMsgAccess(groupId, sendMsg)
+    io.emit('toggleMsgAccess', {groupId, sendMsg})
+  })
 
   // Handle disconnection
   socket.on('disconnect', () => {
@@ -133,6 +149,54 @@ async function updateUsersList() {
   }));
 
   io.emit('userList', usersWithStatus);
+}
+
+async function updateGroupsList() {
+  const allGroups = await Group.find();
+  const groupsWithUsers = await Promise.all(allGroups.map(async (group) => {
+    const participants = await Promise.all(group.participants.map(async (participant) => {
+      const user = await User.findById(participant.userId);
+      return {
+        _id: user._id,
+        email: user.email,
+        username: user.username,
+        online: onlineUsers.get(user?.email) || false,
+        ...participant.toObject()
+      };
+    }));
+  
+    return {
+      ...group.toObject(),
+      participants,
+    };
+  }));
+  
+  // console.log(groupsWithUsers);
+
+  io.emit('groupList', groupsWithUsers);
+}
+
+async function toggleMsgAccess(groupId, toggle){
+  console.log(toggle)
+  await Group.findOneAndUpdate(
+    {_id: groupId},
+    {
+      sendMsg : toggle,
+    },
+    )
+}
+
+async function createGroup(name, participants, socketUserId) {
+  // Create a new group with participant roles
+  console.log(socketUserId);
+  const group = new Group({
+    name : name,
+    participants: [...participants.map(participant => ({ userId: participant, role: 'member' })),
+                       { userId: socketUserId, role: 'admin' }],
+  });
+
+  const newGroup = await group.save();
+  return newGroup._id;
 }
 
 server.listen(PORT, () => {

@@ -6,6 +6,7 @@ import ChatorUserList from './components/ChatorUserList';
 import Navbar from './components/Navbar';
 import ProtectedRoute from './components/ProtectedRoute';
 import Profile from './components/Profile';
+import CreateGroupComponent from './components/CreateGroup';
 
 const AllRoutes = ()=> {
   return (
@@ -17,6 +18,7 @@ const AllRoutes = ()=> {
         <Route path="/login" element={<Login />} />
         <Route element={<ProtectedRoute><ChatorUserList/></ProtectedRoute>} path="/chat" exact/>
         <Route element={<ProtectedRoute><Profile /></ProtectedRoute>} path="/profile" exact/>
+        <Route element={<ProtectedRoute><CreateGroupComponent /></ProtectedRoute>} path="/create-grp" exact/>
       </Routes>
     </Router>
   );

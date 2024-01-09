@@ -3,6 +3,8 @@ import UserList from './userList/UserList';
 import Chat from './Chat';
 import io from 'socket.io-client';
 import { useSelector } from 'react-redux';
+import { setUserSocket } from '../redux/userSlice';
+import GroupList from './GroupList';
 
 
 const ChatorUserList = () => {
@@ -15,7 +17,8 @@ const ChatorUserList = () => {
   useEffect(() => {
     console.log(process.env.REACT_APP_SOCKET_URL)
     const newSocket = io(process.env.REACT_APP_SOCKET_URL, { query: user });
-    setSocket(newSocket)
+    setSocket(newSocket);
+    setUserSocket(newSocket);
 
     return () => {
       // Clean up socket on component unmount
