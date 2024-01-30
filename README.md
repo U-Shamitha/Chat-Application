@@ -11,6 +11,8 @@
 <img src="https://github.com/U-Shamitha/Chat-Application/assets/84791843/b8d92f55-e1e9-48c8-82c4-5a940d779db2" width=48%/>
 <img src="https://github.com/U-Shamitha/Chat-Application/assets/84791843/08a6ad7d-8d8b-4512-a1b2-0a45d16fd41e" width=48%/>
 <img src="https://github.com/U-Shamitha/Chat-Application/assets/84791843/83bca677-950c-4ed3-99bb-16cc44a70073" width=48%/>
+<img src="https://github.com/U-Shamitha/Chat-Application/assets/84791843/59850b57-f1e6-424d-8fc1-adf94d3faaf5" width=48%/>
+
 
 
 
