@@ -11,7 +11,7 @@ import { setUser } from '../../redux/userSlice';
 const Menus = ({toggle, setToggle}) => {
 
   const user = useSelector((state) => state.user.user);
-  console.log(user) 
+//   console.log(user) 
 
   const dispatch = useDispatch();
 

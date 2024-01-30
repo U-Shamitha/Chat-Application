@@ -33,7 +33,7 @@ const Chat = ({ room, setRoom, socket, opponentUser}) => {
     });
 
     socket.on('opponentTyping', ({roomName, typingUser, isTyping }) => {
-      console.log(typingUser);
+      // console.log(typingUser);
         if (roomName===room && typingUser.email !== user.email) {
           setTypingUser(typingUser)
           setOpponentTyping(isTyping);
@@ -41,7 +41,7 @@ const Chat = ({ room, setRoom, socket, opponentUser}) => {
     });
 
     socket.on('receiveMessage', (data) => {
-        console.log("recieved", data);
+        // console.log("recieved", data);
       // Check if the message is already in the state
       const isMessageAlreadyInState = messages.some(
         (msg) =>{
@@ -56,9 +56,9 @@ const Chat = ({ room, setRoom, socket, opponentUser}) => {
     });
 
     socket.on('toggleMsgAccess', ({groupId, sendMsg})=>{
-      console.log('sendMsg', sendMsg);
+      // console.log('sendMsg', sendMsg);
       dispatch(setGroupList({...groupList, [groupId] : {...groupList[groupId], sendMsg: sendMsg}}));
-      console.log('groupList', groupList);
+      // console.log('groupList', groupList);
     })
 
     return () => {
@@ -76,7 +76,7 @@ const Chat = ({ room, setRoom, socket, opponentUser}) => {
 
 
     const getUsersInGroup = (group) => {
-      console.log(group)
+      // console.log(group)
       if(group?.participants){
       const otherMembers = group.participants.filter((participant)=>participant.userId!==user._id);
       return otherMembers.map((member)=>member.username).join(', ')
@@ -128,7 +128,7 @@ const Chat = ({ room, setRoom, socket, opponentUser}) => {
 
   const isAdmin=()=>{
     // console.log(opponentUser._id, user._id)
-    console.log(groupList[opponentUser._id])
+    // console.log(groupList[opponentUser._id])
     // console.log('isAdmin', groupList[opponentUser._id].participants.find((participant)=> participant.userId===user._id))
     return groupList[opponentUser._id].participants.find((participant)=> participant.userId===user._id).role==="admin"
   }
@@ -174,8 +174,10 @@ const Chat = ({ room, setRoom, socket, opponentUser}) => {
       <div className='flex-1 overflow-y-auto p-4' ref={messageContainerRef} >
         {messages.map((msg, index) => (
           <>
-          {opponentUser.type==="group" && groupList[opponentUser._id].participants.some((participant)=>participant._id===user._id) ?
-          <div key={index} className='mb-4'>
+
+          {opponentUser.type==="group" && groupList[opponentUser._id].participants.some((participant)=>participant.userId===user._id) ?
+          <div key={msg._id} className='mb-4'>
+   
             {index === 0 || formatMessageDate(msg.timestamp) !== formatMessageDate(messages[index - 1].timestamp) ? (
               <div className='text-center mb-2 text-gray-500'>
                 {index!=0 && <hr/>}
@@ -192,8 +194,9 @@ const Chat = ({ room, setRoom, socket, opponentUser}) => {
             ) : (
               <div className="flex justify-start mb-4">
                 <div className={`avatar-circle offline max-w-[35px] min-w-[35px] max-h-[35px]`}>
-                  {console.log(msg.userId)}
-                  {console.log(userList[msg.userId])}
+                  {/* {console.log("Username of sender in group")} */}
+                  {/* {console.log(msg.userId)} */}
+                  {/* {console.log(userList[msg.userId])} */}
                   <p className='avatar-text'>{userList[msg.userId]?.username?.charAt(0)}</p>
                 </div>
                 <div className="bg-blue-500 text-white p-3 rounded-lg">
@@ -203,7 +206,7 @@ const Chat = ({ room, setRoom, socket, opponentUser}) => {
               </div>
             )}
           </div>:
-          <div key={index} className='mb-4'>
+          <div key={msg._id} className='mb-4'>
           {index === 0 || formatMessageDate(msg.timestamp) !== formatMessageDate(messages[index - 1].timestamp) ? (
             <div className='text-center mb-2 text-gray-500'>
               {index!=0 && <hr/>}
@@ -247,7 +250,7 @@ const Chat = ({ room, setRoom, socket, opponentUser}) => {
             onChange={(e) => {setMessage(e.target.value); handleTyping()}}
             className='flex-1 p-3 border border-gray-300 rounded-md outline-none focus:border-blue-500'
           />
-          {console.log('send', opponentUser && (opponentUser.type==="non-grp" || isAdmin() || groupList[opponentUser._id].sendMsg==="all"))}
+          {/* {console.log('send', opponentUser && (opponentUser.type==="non-grp" || isAdmin() || groupList[opponentUser._id].sendMsg==="all"))} */}
           {opponentUser && (opponentUser.type==="non-grp" || isAdmin() || groupList[opponentUser._id].sendMsg==="all") && 
           <button
             onClick={handleSendMessage}

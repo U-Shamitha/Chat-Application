@@ -58,7 +58,7 @@ const SignUp = () => {
           password,
         });
   
-        console.log(response.data); // Handle the response as needed
+        // console.log(response.data);
         if(response.data.user){
           dispatch(setUser(response.data.user));
           localStorage.setItem("currentUser", JSON.stringify(response.data.user));

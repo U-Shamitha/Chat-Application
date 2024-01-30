@@ -17,7 +17,7 @@ export const fetchUser = createAsyncThunk(
         if(!!localStorage.getItem('currentUser')){
         // Fetch user data from localStorage
         data = JSON.parse(localStorage.getItem('currentUser'));
-        console.log(data);
+        // console.log(data);
         }
         return data
         } catch (error) {
@@ -67,7 +67,7 @@ export const userSlice = createSlice({
     })
     builder.addCase(fetchUser.fulfilled, (state, action) => {
       state.isLoading = false
-      console.log(action.payload)
+      // console.log(action.payload)
       state.user = action.payload
     })
     builder.addCase(fetchUser.rejected, (state, action) => {

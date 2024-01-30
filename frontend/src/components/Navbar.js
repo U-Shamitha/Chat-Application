@@ -14,7 +14,7 @@ import { setUser } from '../redux/userSlice';
 const Navbar=()=>{
   
   const user = useSelector((state) => state.user.user);
-  console.log(user)
+  // console.log(user)
   const [showSidebar, setShowSidebar] = useState(false);
 
   const dispatch = useDispatch();
@@ -53,7 +53,7 @@ const Navbar=()=>{
                 onClick={() => {
                   dispatch(setUser(null))
                   localStorage.removeItem("currentUser");
-                  console.log(user);
+                  // console.log(user);
                 }}
                 sx={{ my: 2, color: "black", display: "block", "&:hover": { color: "blue"}, alignSelf:'flex-end'}}
             >

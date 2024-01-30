@@ -25,7 +25,9 @@ const UserList = ({ setRoom, socket, setOpponentUser, opponentUser }) => {
       setUsers(userList.filter((otherUser)=> otherUser.email !== user?.email));
       
       socket.emit('getGroups');
-      socket.on('groupList',(groupList)=>{console.log('groupList',groupList);setGroups(groupList)});
+      socket.on('groupList',(groupList)=>{
+        // console.log('groupList',groupList);
+      setGroups(groupList)});
     });
 
     return () => {
@@ -36,7 +38,7 @@ const UserList = ({ setRoom, socket, setOpponentUser, opponentUser }) => {
   }, []);
 
   useEffect(()=>{
-    console.log(searchOpponent);
+    // console.log(searchOpponent);
     const matchedUsers = users.filter((user)=> {
       return user.username.toLowerCase().includes(searchOpponent.toLowerCase())
     })
@@ -59,7 +61,7 @@ const UserList = ({ setRoom, socket, setOpponentUser, opponentUser }) => {
         setRoom(generateRoomName(user?.email, chats[0]?.email));
       }
     }
-    console.log(chats)
+    // console.log(chats)
   },[chats])
 
   useEffect(()=>{
@@ -122,10 +124,10 @@ const UserList = ({ setRoom, socket, setOpponentUser, opponentUser }) => {
       </div>
 
       <div className="user-list pl-7 pr-4">
-        {console.log(chats)}
+        {/* {console.log(chats)} */}
         {chats.length>0 && chats.map((chat) => 
         <>
-        {console.log(chat)}
+        {/* {console.log(chat)} */}
           {chat && chat.type==="group" ?
           //Show Group if the user is member or admin of group
           (groupList[chat._id]?.participants?.some((participant)=>participant.userId===user._id) &&

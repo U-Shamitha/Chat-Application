@@ -8,6 +8,7 @@ import SearchBar from './Search/SearchBar';
 import classes from './Search/searchBar.module..css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faUserGroup } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from 'react-router-dom';
 
 const CreateGroupComponent = () => {
   const [users, setUsers] = useState([]);
@@ -17,6 +18,8 @@ const CreateGroupComponent = () => {
   const [searchOpponent, setSearchOpponent] = useState('');
   const [filteredUsers, setFilteredUsers] = useState(users);
   const [groupName, setGroupName] = useState('');
+
+  const navigate = useNavigate();
 
 
   const user = useSelector((state) => state.user.user);
@@ -33,7 +36,7 @@ const CreateGroupComponent = () => {
   };
 
   const handleCreateGroup = () => {
-    console.log(groupName)
+    // console.log(groupName)
     
     if (!groupName) {
         setErrorMessage('Please enter Group name');
@@ -49,10 +52,11 @@ const CreateGroupComponent = () => {
     socket.emit('createGroup',{groupName, selectedParticipants});
 
     socket.on('joinGroup',  (response)=>{
-        console.log('Group created successfully:', response.groupId);
+        // console.log('Group created successfully:', response.groupId);
         setSelectedParticipants([]);
         setErrorMessage('');
         setGroupName('');
+        navigate('/chat');
     })
 
 
